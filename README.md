@@ -8,23 +8,49 @@ Published events are delivered to each subscription at least once and in publish
 
 ## Get Started
 
-Copy file `sample.env` to `.env`.
+### Copy file `sample.env` to `.env`.
 
 ```bash
 cp example.env .env
 ```
 
-Install Poetry
+### Install Poetry
 
 ```bash
 pip3 install poetry
 ```
 
-Install dependencies
+### Install dependencies
 
 ```bash
 poetry install
 ```
+
+### Enter Python Virtual Environment
+
+```bash
+poetry shell
+```
+
+### Start PostgreSQL server
+
+```bash
+docker-compose up -d
+```
+
+### Start a Producer
+
+```bash
+python -m py_eventbus_pg.main
+```
+
+### Start a Consumer
+
+```bash
+python -m py_eventbus_pg.main test1
+```
+
+,where 'test1' is the subscription ID.
 
 ## Example code
 
