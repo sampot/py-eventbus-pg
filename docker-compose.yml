@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+  # producer:
+  #   build:
+  #     context: .
+  #   container_name: app
+  #   restart: always
+  #   depends_on:
+  #     - postgres
+  #   volumes:
+  #     - ./src:/app:z
+  #   env_file:
+  #     - .env
+  #   command: "python -m py_eventbus_pg.main producer"
+
+  # consumer:
+  #   build:
+  #     context: .
+  #   container_name: app
+  #   restart: always
+  #   depends_on:
+  #     - postgres
+  #   volumes:
+  #     - ./src:/app:z
+  #   env_file:
+  #     - .env
+  #   command: "python -m py_eventbus_pg.main consumer"
+
+  postgres:
+    image: postgres:12.3
+    container_name: postgres
+    volumes:
+      - dbdata:/var/lib/postgresql/data:Z
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+
+  pgweb:
+    container_name: pgweb
+    restart: always
+    image: sosedoff/pgweb
+    ports:
+      - "8081:8081"
+    links:
+      - postgres:postgres
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+
+volumes:
+  dbdata:
